@@ -404,7 +404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364389338}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.041763566, y: -0.00000001812006, z: 7.574192e-10, w: 0.99912757}
+  m_LocalRotation: {x: 0.04176357, y: 0.000000016962742, z: -7.090432e-10, w: 0.99912757}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -514,7 +514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457389948}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.023631068, y: -0.0000000010750978, z: 2.5412806e-11, w: 0.99972075}
+  m_LocalRotation: {x: 0.023631068, y: 9.953267e-10, z: -2.3527203e-11, w: 0.99972075}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 585053557}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 780280313}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1182,7 +1182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.041763566, y: -0.00000003505452, z: 0.0000000014652802, w: 0.9991275}
+  m_LocalRotation: {x: 0.04176357, y: 0.00000003447053, z: -0.0000000014408695, w: 0.9991275}
   m_LocalPosition: {x: -4.01, y: 2.56, z: -7.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1548,7 +1548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266528406}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.059930276, y: -1e-45, z: -0, w: 0.99820256}
+  m_LocalRotation: {x: 0.059930276, y: -3.5335563e-15, z: 1.946562e-16, w: 0.99820256}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1671,6 +1671,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1619452055}
   - component: {fileID: 1619452054}
+  - component: {fileID: 1619452056}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -1801,6 +1802,36 @@ Transform:
   - {fileID: 457389950}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1619452056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619452053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 9
+  m_IgnoreTag: Player
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 1
+  m_MaximumEffort: 4
+  m_SmoothingTime: 0
+  m_Damping: 0
+  m_DampingWhenOccluded: 0
+  m_OptimalTargetDistance: 0
 --- !u!1 &1740052597
 GameObject:
   m_ObjectHideFlags: 0
