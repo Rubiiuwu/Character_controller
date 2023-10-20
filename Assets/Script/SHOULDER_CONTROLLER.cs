@@ -11,6 +11,8 @@ public class SHOULDER_CONTROLLER : MonoBehaviour
     private Transform _lookAtTransform;
     private float _horizontal;
     private float _vertical;
+    public GameObject normalCamera;
+    public GameObject aimCamera;
 
     //Variables para vel, salto y gravedad
     [SerializeField] private float playerSpeed = 5;
@@ -31,18 +33,32 @@ public class SHOULDER_CONTROLLER : MonoBehaviour
     private bool _isGrounded;
 
     // Update is called once per frame
+
         void Awake()
     {
         _controller = GetComponent <CharacterController>();
         _camera = Camera.main.transform;
         _lookAtTransform = GameObject.Find("LookAt").transform;
     }
+
     void Update()
     {
         _horizontal = Input.GetAxisRaw("Horizontal");
         _vertical = Input.GetAxisRaw("Vertical");
         Jump();
         Movement();
+
+        if(Input.GetButton ("Fire2"))
+        {
+            normalCamera.SetActive(false);
+            aimCamera.SetActive(true);
+        }
+        
+        else
+        {
+            normalCamera.SetActive(true);
+            aimCamera.SetActive(false);
+        }
     }
 
     void Jump()
@@ -78,7 +94,7 @@ public class SHOULDER_CONTROLLER : MonoBehaviour
             float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
             Vector3 desiredDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             _controller.Move(desiredDirection * playerSpeed * Time.deltaTime);
-            
         }
     }
+
 }
