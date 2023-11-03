@@ -55,6 +55,9 @@ public class TPS_CONTROLLER : MonoBehaviour
     {
         Vector3 direction = new Vector3 (_horizontal, 0, _vertical);
 
+        _animator.SetFloat("VelX", 0);
+        _animator.SetFloat("VelZ", direction.magnitude); //magnitude nos devuelve el tamaño del vector
+
         if(direction != Vector3.zero)
         {
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
