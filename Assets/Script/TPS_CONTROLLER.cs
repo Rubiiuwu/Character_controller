@@ -26,6 +26,10 @@ public class TPS_CONTROLLER : MonoBehaviour
     [SerializeField] private float _sensorRadius = 0.2f;
     [SerializeField] private LayerMask _groundLayer; 
     private bool _isGrounded;
+
+    //rayo damage
+    public int shootDamage = 2;
+
     void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -49,6 +53,11 @@ public class TPS_CONTROLLER : MonoBehaviour
 
         //Movement();
         Jump();
+        
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+        RayTest();
+        }
     }
 
     void Movement()
@@ -93,9 +102,13 @@ public class TPS_CONTROLLER : MonoBehaviour
     {
         _isGrounded = Physics.CheckSphere(_sensorPosition.position,_sensorRadius, _groundLayer);
 
+        /*_isGrounded = Physics.Raycast(_sensorPosition.position, Vector3.down, _sensorRadius, _groundLayer);
+        Debug.DrawRay(_sensorPosition.position, Vector3.down * _sensorRadius, Color.red);*/
+        //Raycast ground sensor
+
         if(_isGrounded && _playerGravity.y <0)
         {
-            _playerGravity.y = 0;
+            _playerGravity.y = 0; //-2 en raycast
         }
             if(_isGrounded && Input.GetButtonDown ("Jump"))
         {
@@ -105,5 +118,36 @@ public class TPS_CONTROLLER : MonoBehaviour
         _playerGravity.y += _gravity * Time.deltaTime;
         _controller.Move(_playerGravity * Time.deltaTime);
 
+    }
+
+    void RayTest()
+    {
+        /* Reycast simpre para el rayo
+        if(Physics.Raycast(transform.position, transform.forward, 10))
+        //si quisiesemos que el rayo fuese infinito seria Math.infinity en vez de 10//
+        {
+            Debug.Log("Hit");
+            Debug.DrawRay(transform.position, transform.forward * 10, Color.green);
+        }
+
+        else
+        {
+            Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
+        }
+        */
+
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.forward, out hit, 10))
+        {
+            Debug.Log(hit.transform.name);
+            Debug.Log(hit.transform.position);
+            //Destroy(hit.transform.gameObject); pa destruir los objetos que se cruzan con el rayo
+
+            Box caja = hit.transform.GetComponent <Box>(); //para que destruya solo las cajas
+            if(caja != null)
+            {
+                caja.TakeDamage(shootDamage); //hace referencia al damage que le indicamos al principio
+            }
+        }
     }
 }
