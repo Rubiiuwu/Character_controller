@@ -42,6 +42,17 @@ public class Player : MonoBehaviour
     {
         Vector3 direction = new Vector3 (_horizontal, 0, _vertical);
 
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            Debug.DrawLine(Camera.main.transform.position, hit.point);
+
+            Vector3 directionRaycast = transform.position - hit.point;
+            directionRaycast.y = 0;
+            transform.forward = directionRaycast;
+        }
+
         if(direction != Vector3.zero)
         {
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
