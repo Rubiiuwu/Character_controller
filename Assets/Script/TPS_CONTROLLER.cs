@@ -30,6 +30,9 @@ public class TPS_CONTROLLER : MonoBehaviour
     //rayo damage
     public int shootDamage = 2;
 
+    //caja empujable
+    [SerializeField] private float _pushForce = 5;
+
     void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -150,4 +153,30 @@ public class TPS_CONTROLLER : MonoBehaviour
             }
         }
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(_sensorPosition.position,_sensorRadius);
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        if(body == null || body.isKinematic)
+        {
+            return;
+        }
+
+        if(hit.moveDirection.y < -0.2f)
+        {
+            return;
+        }
+
+        Vector3 pushDirection = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+
+        body.velocity = pushDirection * _pushForce;
+    }
+
 }
