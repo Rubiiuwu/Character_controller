@@ -47,6 +47,9 @@ public class TPS_CONTROLLER : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
         _camera = Camera.main.transform;
+
+        Cursor.visible = false; //ocultar el ratón
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
