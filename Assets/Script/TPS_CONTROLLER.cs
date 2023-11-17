@@ -16,6 +16,8 @@ public class TPS_CONTROLLER : MonoBehaviour
     [SerializeField] private float _jumpHeight = 1;
     private float _gravity = -9.81f;
     private Vector3 _playerGravity;  
+    private bool _isAiming = false; //para saber si esamos apuntando
+    [SerializeField] private float _throwForce =10; //fuerza para tirar el cubo
 
     //Variables de rotación
     private float turnSmoothVelocity;
@@ -33,6 +35,13 @@ public class TPS_CONTROLLER : MonoBehaviour
     //caja empujable
     [SerializeField] private float _pushForce = 5;
 
+    //variable para recoger cosas
+    public GameObject objectToGrab;
+    private GameObject grabedObject;
+    [SerializeField] private Transform _interactionZone;
+    
+    
+
     void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -48,10 +57,12 @@ public class TPS_CONTROLLER : MonoBehaviour
         if(Input.GetButton("Fire2"))
         {
             AiMovement();
+            _isAiming = true;
         }
         else
         {
             Movement();
+            _isAiming = false;
         }
 
         //Movement();
@@ -61,6 +72,17 @@ public class TPS_CONTROLLER : MonoBehaviour
         {
         RayTest();
         }
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+        GrabeObject();
+        }
+
+        if(Input.GetButtonDown("Fire1") && grabedObject != null && _isAiming)
+        {
+            ThrowObject();
+        }
+        
     }
 
     void Movement()
@@ -176,7 +198,36 @@ public class TPS_CONTROLLER : MonoBehaviour
 
         Vector3 pushDirection = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
 
-        body.velocity = pushDirection * _pushForce;
+        body.velocity = pushDirection * _pushForce / body.mass;
+
     }
 
+    void GrabeObject()
+    {
+        if(objectToGrab != null && grabedObject == null)
+        {
+            grabedObject = objectToGrab;
+            grabedObject.transform.SetParent(_interactionZone);
+            grabedObject.transform.position = _interactionZone.position;
+            grabedObject.GetComponent<Rigidbody>().isKinematic = true;
+            //hasta aquí está cogiendo el objeto
+        }
+
+        else if(grabedObject != null)
+        {
+            grabedObject.GetComponent<Rigidbody>().isKinematic = false;
+            grabedObject.transform.SetParent(null);
+            grabedObject = null;
+        }
+    }
+
+    void ThrowObject()
+    {
+        Rigidbody grabedBody = grabedObject.GetComponent<Rigidbody>();
+
+        grabedBody.isKinematic = false;
+        grabedObject.transform.SetParent(null);
+        grabedBody.AddForce(_camera.transform.forward * _throwForce, ForceMode.Impulse);
+        grabedObject = null;
+    }
 }
